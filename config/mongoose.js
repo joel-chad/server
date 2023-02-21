@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.set('strictQuery', false);
 module.exports = app => {
-    mongoose.connect('mongodb+srv://joel:test@cluster0.m6xjfyu.mongodb.net/?retryWrites=true&w=majority', {
+    mongoose.connect(process.env.MONGO_URL, {
         // useUnifiedTopology: true,
         useNewUrlParser: true,
         // useFindAndModify: false
