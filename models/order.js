@@ -7,6 +7,10 @@ const orderSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
+    status: {
+        type: String,
+        default: 'IN TRANSIT'
+    },
     items: [{
         itemId: {
             type: ObjectID,
