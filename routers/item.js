@@ -6,7 +6,7 @@ const multerInstance = require('../config/multer')
 const router = new express.Router()
 
 //fetch all items
-router.get('/items', Auth, async(req, res) => {
+router.get('/items', async(req, res) => {
   
     if(req.query.user == 1) {
         try {
