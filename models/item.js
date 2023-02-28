@@ -24,10 +24,10 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    image: {
+    image: [{
        type: String,
        required: true,
-     },
+     }],
     }, 
     {
     timestamps: true
