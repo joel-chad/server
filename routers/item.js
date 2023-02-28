@@ -45,7 +45,7 @@ router.post('/items',Auth, multerInstance.upload.single('image'), async(req, res
         const newItem = new Item({
             ...req.body,
             owner: req.user._id,
-            image: req.file.path
+            image: [req.file.path]
         })
         await newItem.save()
         res.status(201).send(newItem)
