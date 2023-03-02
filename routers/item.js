@@ -40,20 +40,45 @@ router.get('/items/:id', async(req, res) => {
 })
 
 //create an item
-router.post('/items',Auth, multerInstance.upload.single('image'), async(req, res) => {
+// router.post('/items',Auth, multerInstance.upload.any('image'), async(req, res, next) => {
+//     try {
+//         const newItem = new Item({
+//             ...req.body,
+//             owner: req.user._id,
+//             image: req.files
+//         })
+//         // await newItem.save()
+//         // res.status(201).send(newItem)
+//         console.log(newItem)
+//     } catch (error) {
+//         console.log({error})
+//         res.status(400).send({message: "error"})
+//     }
+// })
+
+// uploading multiple images together
+router.post("/items", Auth, multerInstance.upload.array("image", 4),async (req, res) =>{
     try {
+
+        const urlArray = []
+        for(i=0; i<req.files.length;i++){
+            urlArray.push(req.files[i].path)
+        }
+
         const newItem = new Item({
             ...req.body,
             owner: req.user._id,
-            image: [req.file.path]
+            image: urlArray
         })
+        console.log(newItem)
         await newItem.save()
         res.status(201).send(newItem)
+    //   res.send(req.files);
     } catch (error) {
-        console.log({error})
-        res.status(400).send({message: "error"})
+      console.log(error);
+      res.send(400);
     }
-})
+  });
 
 //update an item
 
