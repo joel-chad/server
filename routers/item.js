@@ -73,7 +73,7 @@ router.post("/items", Auth, multerInstance.upload.array("image", 4),async (req, 
             image: urlArray,
             tags: tags
         })
-        console.log(tags)
+        // console.log(tags)
         await newItem.save()
         res.status(201).send(newItem)
     //   res.send(req.files);
