@@ -56,21 +56,24 @@ router.get('/items/:id', async(req, res) => {
 //     }
 // })
 
-// uploading multiple images together
+// uploading multiple images together in an item
 router.post("/items", Auth, multerInstance.upload.array("image", 4),async (req, res) =>{
     try {
 
         const urlArray = []
+        const tagsArray = []
         for(i=0; i<req.files.length;i++){
             urlArray.push(req.files[i].path)
         }
 
+        const {tags, category, owner, description, name, price} = req.body
         const newItem = new Item({
-            ...req.body,
+            category, owner, description, name, price,
             owner: req.user._id,
-            image: urlArray
+            image: urlArray,
+            tags: tags
         })
-        console.log(newItem)
+        console.log(tags)
         await newItem.save()
         res.status(201).send(newItem)
     //   res.send(req.files);
