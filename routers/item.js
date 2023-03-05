@@ -1,5 +1,6 @@
 const express = require('express')
 const Item = require('../models/item')
+const Review = require('../models/review')
 const Auth = require('../middleware/auth')
 const multerInstance = require('../config/multer')
 
@@ -29,7 +30,10 @@ router.get('/items', async(req, res) => {
 //fetch an item
 router.get('/items/:id', async(req, res) => {
     try{
-        const item = await Item.findOne({_id: req.params.id})
+        const item = await Item.findOne({_id: req.params.id}).populate({
+            path: 'reviews',
+            model: 'Review'
+        })
         if(!item) {
             res.status(404).send({error: "Item not found"})
         }
@@ -61,7 +65,6 @@ router.post("/items", Auth, multerInstance.upload.array("image", 4),async (req, 
     try {
 
         const urlArray = []
-        const tagsArray = []
         for(i=0; i<req.files.length;i++){
             urlArray.push(req.files[i].path)
         }
@@ -120,6 +123,25 @@ router.delete('/items/:id', Auth, async(req, res) => {
         res.send(deletedItem)
     } catch (error) {
         res.status(400).send(error)
+    }
+})
+
+router.post('/item/review/:id', Auth, async (req, res)=>{
+    try{
+        const {description, stars} = req.body
+        let user = new Item()
+        user.reviews
+        let newReview = new Review({
+            owner: req.user._id,
+            description, 
+            item: req.params.id,
+            stars
+        })
+        newReview.save()
+        res.status(201).send(newItem)
+    }catch(error){
+        res.status(400).send(error)
+        console.log(error)
     }
 })
 

@@ -32,7 +32,19 @@ const itemSchema = new mongoose.Schema({
         type: String,
         required: true,
       }],
-    }, 
+     
+    reviews: [{
+        reviewId: {
+            type: ObjectID,
+            ref: 'Review'
+        },
+        // name: String,
+        // description: {
+        //     type: String,
+        // },
+        // stars: Number
+    }], 
+    },
     {
     timestamps: true
 })
