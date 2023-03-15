@@ -10,6 +10,18 @@ const router = new express.Router()
 
 
 //get orders
+router.get('/orders/all', Auth, async (req, res) => { 
+    const owner = req.user._id;
+    try {
+        const order = await Order.find().sort({ date: -1 });
+        if(order) {
+            return res.status(200).send(order)
+        }
+        res.status(404).send('No orders found')
+    } catch (error) {
+        res.status(500).send()
+    }
+})
 
 router.get('/orders', Auth, async (req, res) => {
     const owner = req.user._id;
