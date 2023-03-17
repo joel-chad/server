@@ -9,7 +9,11 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: 'IN TRANSIT'
+        default: 'IN PROCESSING'
+    },
+    delivery_time:{
+       type: Number,
+       default: 48 
     },
     items: [{
         itemId: {

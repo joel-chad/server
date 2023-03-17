@@ -68,4 +68,31 @@ router.post('/order/checkout', Auth, async(req, res) => {
     }
 })
 
+//update an item
+
+router.patch('/order/:id', Auth, async(req, res) => {
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['delivery_time', 'status']
+
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if(!isValidOperation) {
+        return res.status(400).send({ error: 'invalid updates'})
+    }
+
+    try {
+        const order = await Order.findOne({ _id: req.params.id})
+    
+        if(!order){
+            return res.status(404).send()
+        }
+
+        updates.forEach((update) => order[update] = req.body[update])
+        await order.save()
+        res.send(order)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
 module.exports = router
