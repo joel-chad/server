@@ -90,9 +90,9 @@ router.patch('/user/address/:id', Auth, async(req, res) => {
 router.get('/user/count', Auth, async(req, res)=>{
     try{
         const count = await User.count({
-            type: 'subscriber'
+            type: 'Subscriber'
         })
-        res.send(count)
+        res.send({count})
     } catch (error) {
         res.status(400).send(error)
     }

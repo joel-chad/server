@@ -98,11 +98,12 @@ router.patch('/order/:id', Auth, async(req, res) => {
 router.get('/orders/count', Auth, async(req, res)=>{
     try{
         const count = await Order.count({
-            status: 'PAID'
+            status: 'IN TRANSIT'
         })
-        res.send(count)
+        // console.log(count)
+        res.status(201).send({count})
     } catch (error) {
-        res.status(400).send(error)
+        res.sendStatus(400).send(error)
     }
 })
 
