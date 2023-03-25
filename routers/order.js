@@ -95,4 +95,15 @@ router.patch('/order/:id', Auth, async(req, res) => {
     }
 })
 
+router.get('/orders/count', Auth, async(req, res)=>{
+    try{
+        const count = await Order.count({
+            status: 'PAID'
+        })
+        res.send(count)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
 module.exports = router

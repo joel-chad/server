@@ -86,4 +86,15 @@ router.patch('/user/address/:id', Auth, async(req, res) => {
         res.status(400).send(error)
     }
 })
+
+router.get('/user/count', Auth, async(req, res)=>{
+    try{
+        const count = await User.count({
+            type: 'subscriber'
+        })
+        res.send(count)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
 module.exports = router

@@ -145,5 +145,13 @@ router.post('/item/review/:id', Auth, async (req, res)=>{
     }
 })
 
+router.get('/item/count', Auth, async(req, res)=>{
+    try{
+        const count = await Item.count()
+        res.send(count)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
 
 module.exports = router
