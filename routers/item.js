@@ -90,7 +90,7 @@ router.post("/items", Auth, multerInstance.upload.array("image", 4),async (req, 
 
 router.patch('/items/:id', Auth, async(req, res) => {
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['name', 'description', 'category', 'price']
+    const allowedUpdates = ['name', 'description', 'category', 'price', 'tags']
 
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
