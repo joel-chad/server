@@ -43,6 +43,23 @@ router.get('/items/:id', async(req, res) => {
     }
 })
 
+router.get('/items/search/:searchQuery', Auth,async (req, res)=>{
+    
+  const { searchQuery } = req.params;
+  try {
+    const users = await Item.find({
+      $or: [
+        { name: { $regex: searchQuery, $options: 'i' } },
+        { tags: { $regex: searchQuery, $options: 'i' } }
+      ]
+    });
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+})
+
 //create an item
 // router.post('/items',Auth, multerInstance.upload.any('image'), async(req, res, next) => {
 //     try {
